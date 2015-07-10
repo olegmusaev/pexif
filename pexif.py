@@ -145,7 +145,7 @@ class DefaultSegment:
         self.data = data
         self.mode = mode
         self.fd = fd
-        self.code = jpeg_markers.get(self.marker, ('Unknown-{}'.format(self.marker), None))[0]
+        self.code = jpeg_markers.get(self.marker, ('Unknown-{0}'.format(self.marker), None))[0]
         assert mode in ["rw", "ro"]
         if self.data is not None:
             self.parse_data(data)
@@ -304,11 +304,11 @@ class IfdData(object):
         for key, entry in self.embedded_tags.items():
             if entry[0] == name:
                 if not isinstance(value, entry[1]):
-                    raise TypeError("Values assigned to '{}' must be instances of {}".format(entry[0], entry[1]))
+                    raise TypeError("Values assigned to '{0}' must be instances of {1}".format(entry[0], entry[1]))
                 self[key] = value
                 return
 
-        raise AttributeError("Invalid attribute '{}'".format(name))
+        raise AttributeError("Invalid attribute '{0}'".format(name))
 
     def __delattr__(self, name):
         for key, entry in self.tags.items():
@@ -316,7 +316,7 @@ class IfdData(object):
                 del self[key]
                 break
         else:
-            raise AttributeError("Invalid attribute '{}'".format(name))
+            raise AttributeError("Invalid attribute '{0}'".format(name))
 
     def __getattr__(self, name):
         for key, entry in self.tags.items():
@@ -367,7 +367,7 @@ class IfdData(object):
             return self.__setattr__(key, value)
         found = 0
         if len(self.tags[key]) < 3:
-            msg = "Error: Tags aren't set up correctly. Tag: {:x}:{} should have tag type."
+            msg = "Error: Tags aren't set up correctly. Tag: {0:x}:{1} should have tag type."
             raise Exception(msg.format(key, self.tags[key]))
         if self.tags[key][2] == ASCII:
             if value is not None and not value.endswith('\0'):
